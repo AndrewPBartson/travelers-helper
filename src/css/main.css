@@ -1,0 +1,143 @@
+.container1 {
+  display: grid;
+  grid-template-columns: 342px 1fr ; 
+}
+#sidebar {
+	display: grid;
+	align-items: center;
+	justify-items: center;
+	grid-template-rows: 35px 200px 300px auto;
+	border-right: solid gray 1px;
+}
+.main_title {
+	display: grid;
+	justify-items: center;
+	font-family: Impact, 'Arial Black', 'sans serif'; 
+	font-weight: 100;
+	color: 'blue';
+	padding: 30px;
+}
+#main_title {
+	color: #389ed5;
+	font-size: 45px;
+	width: 100%;
+}
+h3 {
+	font-family: Impact,'Roboto-Regular', Helvetica, Arial;
+	text-transform: uppercase;
+	text-align: center;
+}
+#user_input {
+	display: grid;
+	grid-template-rows: 1fr 40px;
+}
+#form_list {
+	display: grid;
+	grid-auto-rows: 40px 40px 40px 85px;
+	align-items: center;
+}
+/* #form_list li {
+	display: grid;
+} */
+#save_button {
+	height: 40px;
+}
+div.ui-datepicker select {
+	width: auto; 
+	font-size: 100%; 
+	color: #362b36;
+}
+input[type="number"] {
+	width: 45px;
+}
+#resume_time {
+	width: 45px;
+}
+#custom_options {
+	/*border: 1px solid red;*/
+	/*margin-right: 30px;*/
+		opacity: 0.4;
+}
+#custom_options label,
+#custom_options input {
+	display: inline;
+}
+#user_input ul {
+	list-style-type: none;
+}
+#default_li {
+  background-color: yellow;
+	margin: 0;
+	/* padding: 10px;	 */
+}
+#custom_li {
+	margin: 0;
+    /* padding: 10px;	 */
+}
+.custom_options li { 
+  margin-left: 1em;
+	font: 10px/21px Tahoma; 
+}
+.highlight {
+	background-color: yellow;
+}
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="email"],
+select {
+	font: 14px Tahoma, "Tahoma", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#results, #json{
+	background-color: #def;
+}
+#results p, #json {
+	font-family: monospace;
+	margin: .5ex 1ex;
+}
+#results p.error, #json {
+}
+#li_1 {
+ display: grid;
+ grid-template-columns: 60px auto;
+ justify-items: right;
+ align-items: center;
+}
+#li_2 {
+	display: grid;
+	grid-template-columns: 60px auto;
+	justify-items: right;
+	align-items: center;
+}
+#li_3 {
+	display: grid;
+	grid-template-columns: 150px auto;
+	justify-items: right;
+	align-items: center;
+}
+li { 
+	display: grid;
+}
+ul {
+	padding: 0;
+	margin: 0;
+}
+.label {
+	padding-right: 12px;
+	color: #00738C;
+}
+input {
+	height: 26px;
+	border: 0.5px #07C46B solid;
+	padding-left: 5px;
+	border-radius: 3px;
+}
+.miles_label {
+	padding-right: 0;
+	color: #00738C;
+}
+.photo_title {
+	font-size: 18px;
+	font-family: 'Roboto-Regular', Helvetica, Arial;
+	font-weight: bold;
+}

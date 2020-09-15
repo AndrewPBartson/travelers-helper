@@ -3,7 +3,7 @@ const axios = require('axios')
 const polyline = require('polyline')
 
 function isValidTripInput(trip) {
-  // must have origin and destination or for gedda boudit
+  console.log('trip :', trip);// must have origin and destination or fa gedda boudit
   return true; 
 }
 
@@ -35,6 +35,7 @@ function getTripByIdController(req, res, next) {
 function processUserInput(req_data) {
   let trip = {};
   trip.exports = {}
+  trip.way_points = []
   trip.depart_time = req_data.depart_time
   trip.use_defaults = req_data.use_defaults
   trip.cycle_24_hr = req_data.cycle_24_hr
@@ -45,7 +46,7 @@ function processUserInput(req_data) {
   // trip.user_mi_per_day = trip.speed * trip.hours_driving
   trip.user_mi_per_day = 500;
   trip.miles_per_day = req_data.miles_per_day 
-  trip.user_meters_per_day = trip.miles_per_day * 1609.34
+  trip.meters_per_day = trip.miles_per_day * 1609.34
   trip.origin = req_data.origin
   trip.end_point = req_data.end_point
   trip.leg_distances = []
@@ -54,7 +55,7 @@ function processUserInput(req_data) {
 }
 
 function firstSimpleRequest(trip) { 
-  trip.way_points = []
+  console.log('trip :', trip);
   let format_origin = trip.origin.split(" ").join("+") 
   let format_end_point = trip.end_point.split(" ").join("+")
   let trip_url = `https://maps.googleapis.com/maps/api/directions/json?origin=
@@ -73,8 +74,9 @@ function extractTripPoints(response, trip) {
   // takes the trip summary polyline and decodes it.
   // the result is an array of lat/lng coordinates - amazing
   trip.trip_points = polyline.decode(response.data.routes[0].overview_polyline.points)
-  // get total length of trip in meters and miles
+  // maybe points don't need to be saved to exports until after last recalculation?
   trip.exports.trip_points = trip.trip_points
+  // get total length of trip in meters and miles
   trip.total_meters = response.data.routes[0].legs[0].distance.value
   trip.total_mi = trip.total_meters / 1609.34
   return trip
@@ -110,7 +112,7 @@ function calcFirstWayPoints(trip) {
   }
   trip.way_points.push(trip.trip_points[trip.trip_points.length-1]) // push destination
   console.log(' ')
-  console.log('   First calcuation (guess) of way_points -')
+  console.log('   First calculation (guess) of way_points -')
   console.log(trip.way_points)
   return trip
 }
@@ -119,13 +121,14 @@ function printRecalcResults(trip) {
   console.log(' ')
   console.log('    ********************** Reality Checks ****************')
   console.log('    total_meters - ', trip.total_meters)
-  console.log('    user_meters_per_day - ', trip.user_meters_per_day)
+  console.log('    meters_per_day - ', trip.meters_per_day)
   console.log('    length of second leg - ', trip.leg_distances[1])
   //console.log('    total mi - ', trip.total_mi)
   //console.log('    miles_per_day - ', trip.miles_per_day)
   console.log('    trip_points.length - ', trip.trip_points.length)  
   console.log('    meter_counts.length - ', trip.meter_counts.length)
   console.log('    num_segments - ', trip.num_segments)
+  console.log('    trip.way_points :', trip.way_points);
   console.log('    way_points.length - ', trip.way_points.length)
   console.log('    leg_distances.length - ', trip.leg_distances.length)
   console.log('    num_legs - ', trip.num_legs)
@@ -206,12 +209,12 @@ function setUrlWithWayPoints(trip) {
 }
 
 function findMeterCountAtBreakPoints(trip) {
-  let { meter_counts, trip_points, user_meters_per_day } = trip
+  let { meter_counts, trip_points, meters_per_day } = trip
   let new_way_point;
   let new_way_points = [];
   let targets = [];
   trip.way_points_set = [];
-  let break_point = user_meters_per_day
+  let break_point = meters_per_day
   let target_meters = break_point
   // prev, next are points on either side of the selected point
   // Although not implemented yet, these points will provide 
@@ -315,7 +318,7 @@ function recalculateWayPoints(trip) {
   // (ie Seattle to Miami at 650 mi per day) 
   // but for other routes it may be unnecessary 
   // (i.e. Singapore to Hanoi at 100 mi per day)
-  let { total_mi, total_meters, miles_per_day, user_meters_per_day, 
+  let { total_mi, total_meters, miles_per_day, meters_per_day, 
     num_segments, num_legs, num_legs_round, leftovers, way_points, 
     trip_points, meter_counts } = trip;
   trip.leg_distances = []
@@ -365,7 +368,7 @@ function createTestUrl(trip) {
 function createPlacesUrl(points) {
   let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=` +
   + points[0] + ',' + points[1] + `&radius=7000&type=lodging&key=AIzaSyDZSeVvDKJQFTgtYkjzOe368PIDbaq6OQE`
- //console.log("url -  ", url)
+//  console.log("url -  ", url)
  return url
 }
 
