@@ -8,7 +8,7 @@
     "start": "concurrently \"npm run start-frontend\" \"npm start-backend\"",
     "start-frontend": "react-scripts start",
     "start-backend": "nodemon server/server.js",
-    "test": "(dropdb --if-exists trip_planner && createdb trip_planner) && NODE_ENV=test mocha --exit"
+    "test": "none"
   },
   "author": "Andrew Bartson",
   "license": "ISC",

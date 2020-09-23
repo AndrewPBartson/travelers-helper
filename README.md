@@ -1,27 +1,29 @@
 # Travelers Helper
 
-**Travelers Helper** is a web application that helps long-distance drivers plan their road trips. 
-The user enters origin, destination, and miles to travel per day. When the user clicks the **Create Trip** button, the application calculates appropriate stopping places and finds a nearby lodging option for each stopping place. 
+**Travelers Helper** is a web application for planning long-distance multi-day road trips. The user enters the starting point, destination, and number of miles to drive each day.  The app creates a route for the trip and figures out a place for the user to stop at the end of each day's travel. For each stopping place the app finds a nearby hotel or other accommodations. When the user clicks on the map icon for a stopping place, an information window pops up with a photo of the hotel or other accommodations.
+
+This application accomplishes all this by working in combination with Google Maps. The first step is straightforward: retrieve a standard route from Google Maps based on starting point and destination as given by the user. After that, the route is decoded and a rough estimate is made of where the stopping places should be. Then there is another call to Google Maps API, followed by another round of calculations that produce a better estimate for the stopping places. This sequence is repeated four times to produce a satisfactory result that is returned to the browser. The application uses a separate API, the Google Places API, to gather information about hotel accommodations including photos.
 
 [Link to deployed version](https://travelers-helper.herokuapp.com/)
 
+![Example of user input along with the route produced based on that input](./imgs_readme/route.png?raw=true "Example of user input along with the route produced based on that input")
+![When the user clicks on a map icon, a window pops up showing a lodging option for that location](./imgs_readme/route_w_hotels.png?raw=true "When the user clicks on a map icon, a window pops up showing a lodging option for that location")
 
-The project is contained in two repositories: 
-- **travel_plannerBE** (this repository) has back end components. 
-- [**travel_plannerFE**](https://github.com/AndrewBartson/travel_plannerFE) has front end components.
+## Install the Project Locally
 
-## Install and launch Front End components -
+* "git clone https://github.com/AndrewPBartson/travelers-helper.git"
+* "npm install"
 
-- "git clone https://github.com/AndrewBartson/travel_plannerFE.git"
-- "npm install"
-- "npm start"
+## Launch the Back End Server
 
-## Install and launch Back End components -
+* "npm run start-backend"
 
-- "git clone https://github.com/AndrewBartson/travel_plannerBE.git"
-- "npm install"
-- "npm start"
+This starts the server which then listens for incoming requests on port 8001, that is, localhost:8001. The back end also sends HTTP requests to Google Directions API and Google Places API.
 
-This version of the project is set up for the server to run locally. The links in the front end components are configured to send HTTP requests to localhost:8001. The back end components run a server on localhost:8001. The back end sends HTTP requests to Google Directions API and Google Places API.
+## Launch the Front End Application
+
+* "npm run start-frontend"
+
+This will set up the client-side code and launcg the single page application in a browser window. If the browser doesn't open automatically, type localhost:3000 into the address bar of your browser. The front end components are configured to send HTTP requests to localhost:8001 where the back end server is listening and responding.
 
 Please visit [the deployed version of the project](https://travelers-helper.herokuapp.com/)
